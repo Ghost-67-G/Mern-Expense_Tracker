@@ -16,6 +16,7 @@ const Register = () => {
         userName: email.value,
       });
       toast.success("Successfully signed up Please verify your email");
+      e.reset();
     } catch (error) {
       console.log(error);
       toast.error(error.response.data);

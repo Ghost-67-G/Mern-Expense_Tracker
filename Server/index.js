@@ -4,6 +4,7 @@ const app = express();
 let cookieParser = require("cookie-parser");
 const userRoutes = require("./src/Routes/user.routes");
 const transactionRoutes = require("./src/Routes/transaction.routes");
+const path = require("path");
 env.config();
 const mongoose = require("mongoose");
 
@@ -29,6 +30,7 @@ app.use(express.json());
 
 app.use("/api/user", userRoutes);
 app.use("/api/transactions", transactionRoutes);
+app.use(express.static(path.join(__dirname, "build")));
 
 console.log(process.env.NODE_ENV);
 const PORT = process.env.PORT || 8000;

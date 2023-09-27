@@ -1,7 +1,9 @@
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 const AddTransaction = () => {
+  const dispatch = useDispatch();
   const transaction = async (e) => {
     e.preventDefault();
     const [title, description, amount, type] = e.target;
@@ -13,7 +15,10 @@ const AddTransaction = () => {
         amount: amount.value,
         type: type.value,
       });
-      console.log(resp);
+      dispatch({
+        type: "LOGIN",
+        payload: resp.data.user,
+      });
       toast.success("Success!");
     } catch (error) {
       console.log(error);

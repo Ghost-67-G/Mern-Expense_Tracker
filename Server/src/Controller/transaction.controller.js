@@ -4,6 +4,9 @@ const User = require("../Models/user.model");
 const getTransaction = async (req, res) => {
   try {
     const filter = req.query || {};
+    if (filter.title) {
+      filter.title = { $regex: filter.title, $options: "i" }; // Case-insensitive title search
+    }
     const transactions = await Transaction.find(filter);
     if (!transactions) {
       res.status(404).send("Transaction not found");
@@ -34,10 +37,10 @@ const createTransaction = async (req, res) => {
     }
 
     user.save();
-    res.status(201).send("Transaction successfully created");
+    res.status(201).send({ message: "Transaction successfully created", user });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
@@ -98,7 +101,39 @@ const deleteTransaction = async (req, res) => {
     }
 
     await user.save();
-    res.status(204).send("Successfully Deleted"); // No Content
+    res.status(201).send("Successfully Deleted"); // No Content
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+const searchTransaction = async (req, res) => {
+  try {
+    const { title, userId } = req.query;
+    const searchCriteria = {};
+
+    if (!title && !userId) {
+      return res.status(400).send("Title or userId parameter is missing");
+    }
+
+    if (title) {
+      searchCriteria.title = { $regex: title, $options: "i" }; // Case-insensitive title search
+    }
+
+    if (userId) {
+      searchCriteria.userId = userId;
+    }
+
+    const transactions = await Transaction.find(searchCriteria);
+
+    if (!transactions || transactions.length === 0) {
+      return res
+        .status(404)
+        .send("No transactions found for the given criteria");
+    }
+
+    res.status(200).json(transactions);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -110,4 +145,5 @@ module.exports = {
   getTransaction,
   updateTransaction,
   deleteTransaction,
+  searchTransaction, // Add the searchTransaction function to the exported object
 };
