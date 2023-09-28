@@ -101,7 +101,7 @@ const deleteTransaction = async (req, res) => {
     }
 
     await user.save();
-    res.status(201).send("Successfully Deleted"); // No Content
+    res.status(201).send({message:"Successfully Deleted",user}); // No Content
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

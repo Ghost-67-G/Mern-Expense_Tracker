@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const History = () => {
   const [history, setHistory] = useState([]);
   const [search, setSearch] = useState("");
-  const History = new Array(50).fill(null);
+  const dispatch = useDispatch();
   const userId = useSelector((store) => store.user._id);
   const getHistory = async () => {
     try {
@@ -40,7 +40,11 @@ const History = () => {
       let resp = await axios.delete("/api/transactions/" + id);
       console.log(resp);
 
-      toast.success(resp.data);
+      toast.success(resp.data.message);
+      dispatch({
+        type: "LOGIN",
+        payload: resp.data.user,
+      });
       getHistory();
     } catch (error) {
       toast.error("Faild to delete! Please resolve");
