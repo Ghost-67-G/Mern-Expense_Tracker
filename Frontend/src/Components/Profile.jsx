@@ -1,14 +1,22 @@
+import axios from "axios";
 import React from "react";
 import { BsCashStack } from "react-icons/bs";
 import { MdAccountBalance } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
   console.log(user);
+  const logout = async()=>{
+    console.log("hello")
+const resp = await axios.get('/api/user/logout')
+toast.success("logout Successfully")
+window.location.reload()
+  }
   return (
-    <div className="py-10 w-1/4 border text-center rounded  ">
-      <h2 className="text-2xl font-semibold mb-4">Your Profile</h2>
+    <div className="py-10 md:w-1/4 sm:w-full border text-center rounded  ">
+      <h2 className=":text-2xl  font-semibold mb-4">Your Profile</h2>
       <div className="border rounded-full inline-block py-4 bg-blue-300 px-2">
         <img
           src="/download.png"
@@ -47,6 +55,7 @@ const Profile = () => {
           Status: <span>{user.status}</span>
         </h1>
       </div>
+      <button className="bg-red-500 rounded px-3 py-2 font-semibold text-white mt-2" onClick={logout}>Logout</button>
     </div>
   );
 };

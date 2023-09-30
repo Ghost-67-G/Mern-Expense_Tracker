@@ -30,7 +30,7 @@ const AddTransaction = () => {
   return (
     <>
       <div className="border text-center py-3">
-        <h3 className="text-2xl font-semibold font-sans">
+        <h3 className="md:text-2xl text-xl font-semibold font-sans">
           Add New Transaction
         </h3>
       </div>

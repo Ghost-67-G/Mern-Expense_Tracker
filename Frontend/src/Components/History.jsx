@@ -63,7 +63,7 @@ const History = () => {
   return (
     <div className="h-[514px] overflow-hidden">
       <div className=" flex border  justify-between py-3 px-3">
-        <h3 className="text-2xl font-semibold font-sans">History</h3>
+        <h3 className="md:text-2xl text-xl  font-semibold font-sans">History</h3>
         <input
           type="text"
           onChange={(e) => {

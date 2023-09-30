@@ -5,8 +5,8 @@ import History from "./History";
 const Header = () => {
   const [toggle, setToggle] = useState(false);
   return (
-    <div className="w-1/2  border">
-      <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
+    <div className="md:w-1/2 sm:w-full  border">
+      <ul className="flex flex-wrap  text-sm font-medium text-center text-gray-500 border-b border-gray-200">
         <li
           onClick={() => {
             setToggle(false);

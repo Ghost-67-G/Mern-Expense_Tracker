@@ -26,13 +26,14 @@ const createUser = async (req, res) => {
           console.log(error);
           res.status(400).send("Email cannot send try Again");
         } else {
-          res.status(201).send("User registered successfully");
           await user.save();
+          res.status(201).send("User registered successfully");
         }
       });
     } else {
       await user.save();
-    }
+      res.status(201).send("User registered successfully");
+        }
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -120,9 +121,27 @@ const login = async (req, res) => {
     })
     .send({ user, tokens });
 };
+const logout = async (req, res) => {
+  // Clear the 'tokens' cookie
+  res
+    .cookie("tokens", "", {
+      domain:
+        process.env.NODE_ENV === "development"
+          ? "localhost"
+          : "expense-tracker-as.cyclic.cloud",
+      // secure: true,
+      // httpOnly: true,
+      // sameSite: 'none',
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      expires: new Date(0), // Set the expiration to a past date (clears the cookie)
+    })
+    .send("Logged out");
+};
 
 const authenticate = async (req, res) => {
   res.status(200).send({ user: req.user });
 };
 
-module.exports = { createUser, verifyUser, login, authenticate };
+module.exports = { createUser, verifyUser, login, authenticate, logout };

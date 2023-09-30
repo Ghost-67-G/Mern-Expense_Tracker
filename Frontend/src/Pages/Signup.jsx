@@ -3,8 +3,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
     const [email, password, userName] = e.target.elements;
@@ -16,7 +18,8 @@ const Register = () => {
         userName: email.value,
       });
       toast.success("Successfully signed up Please verify your email");
-      e.reset();
+      e.target.reset();
+      navigate("/login");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data);
