@@ -31,6 +31,9 @@ app.use(express.json());
 app.use("/api/user", userRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use(express.static(path.join(__dirname, "build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+});
 
 console.log(process.env.NODE_ENV);
 const PORT = process.env.PORT || 8000;
