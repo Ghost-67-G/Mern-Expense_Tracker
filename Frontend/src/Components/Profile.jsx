@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const Profile = () => {
-  // const user = useSelector((store) => store.user);
-  const user = JSON.parse(localStorage.getItem("user"));
+ const user = useSelector((store) => store.user);
+  //const user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
   const logout = async()=>{
     console.log("hello")
