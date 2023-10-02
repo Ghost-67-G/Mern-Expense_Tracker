@@ -16,6 +16,7 @@ const App = () => {
     axios
       .get("/api/user/authenticate")
       .then((res) => {
+      localStorage.setItem("user", JSON.stringify(res.data.user));
         dispatch({
           type: "LOGIN",
           payload: res.data.user,

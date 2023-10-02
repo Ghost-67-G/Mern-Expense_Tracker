@@ -15,6 +15,7 @@ const Login = () => {
         email: email.value,
         password: password.value,
       });
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       dispatch({
         type: "LOGIN",
         payload: response.data.user,

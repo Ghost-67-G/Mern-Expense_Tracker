@@ -15,6 +15,7 @@ const AddTransaction = () => {
         amount: amount.value,
         type: type.value,
       });
+      localStorage.setItem("user", JSON.stringify(resp.data.user));
       dispatch({
         type: "LOGIN",
         payload: resp.data.user,

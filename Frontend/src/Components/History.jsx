@@ -41,6 +41,7 @@ const History = () => {
       console.log(resp);
 
       toast.success(resp.data.message);
+      localStorage.setItem("user", JSON.stringify(resp.data.user));
       dispatch({
         type: "LOGIN",
         payload: resp.data.user,

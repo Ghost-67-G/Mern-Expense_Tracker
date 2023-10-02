@@ -2,6 +2,7 @@ import { createStore, combineReducers } from "redux";
 
 function user(old = {}, newData) {
   if (newData.type == "LOGIN") {
+    localStorage.setItem("user", JSON.stringify(newData.payload));
     return { ...newData.payload };
   } else if (newData.type === "LOG_OUT") {
     return {};
