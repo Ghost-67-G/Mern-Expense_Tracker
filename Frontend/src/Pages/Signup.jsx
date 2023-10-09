@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ const Register = () => {
     const [email, password, userName] = e.target.elements;
     console.log(e.target);
     try {
-      const response = await axios.post("/api/user/", {
+       await axios.post("/api/user/", {
         email: password.value,
         password: userName.value,
         userName: email.value,

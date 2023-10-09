@@ -11,7 +11,7 @@ const Profile = () => {
   console.log(user);
   const logout = async()=>{
     console.log("hello")
-const resp = await axios.get('/api/user/logout')
+ await axios.get('/api/user/logout')
 toast.success("logout Successfully")
 window.location.reload()
   }

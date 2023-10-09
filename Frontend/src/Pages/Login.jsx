@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-    const [email, password, remember] = e.target;
+    const [email, password] = e.target;
     try {
       const response = await axios.post("/api/user/login", {
         email: email.value,
