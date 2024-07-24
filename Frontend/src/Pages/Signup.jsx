@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { basePath } from "../constant";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Register = () => {
     const [email, password, userName] = e.target.elements;
     console.log(e.target);
     try {
-       await axios.post("/api/user/", {
+       await axios.post(basePath +"/api/user/", {
         email: password.value,
         password: userName.value,
         userName: email.value,

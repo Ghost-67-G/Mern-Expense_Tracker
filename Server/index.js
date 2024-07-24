@@ -7,6 +7,11 @@ const transactionRoutes = require("./src/Routes/transaction.routes");
 const path = require("path");
 env.config();
 const mongoose = require("mongoose");
+var cors = require('cors')
+app.use(cors({
+  credentials: true,
+  origin: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.HOSTADRESS,
+}))
 
 const connectDB = async () => {
   try {
@@ -24,9 +29,9 @@ const connectDB = async () => {
 };
 
 connectDB();
+app.use(express.json());
 
 app.use(cookieParser());
-app.use(express.json());
 
 app.use("/api/user", userRoutes);
 app.use("/api/transactions", transactionRoutes);

@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { basePath } from "../constant";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -11,11 +12,17 @@ const Login = () => {
     e.preventDefault();
     const [email, password] = e.target;
     try {
-      const response = await axios.post("/api/user/login", {
-        email: email.value,
-        password: password.value,
-      });
+      const response = await axios.post(
+        basePath + "/api/user/login",
+        {
+          email: email.value,
+          password: password.value,
+        },
+        { withCredentials: true }
+      );
+      console.log(response);
       localStorage.setItem("user", JSON.stringify(response.data.user));
+
       dispatch({
         type: "LOGIN",
         payload: response.data.user,

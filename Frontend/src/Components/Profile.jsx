@@ -4,17 +4,18 @@ import { BsCashStack } from "react-icons/bs";
 import { MdAccountBalance } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { basePath } from "../constant";
 
 const Profile = () => {
- const user = useSelector((store) => store.user);
+  const user = useSelector((store) => store.user);
   //const user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
-  const logout = async()=>{
-    console.log("hello")
- await axios.get('/api/user/logout')
-toast.success("logout Successfully")
-window.location.reload()
-  }
+  const logout = async () => {
+    console.log("hello");
+    await axios.get(basePath + "/api/user/logout", { withCredentials: true });
+    toast.success("logout Successfully");
+    window.location.reload();
+  };
   return (
     <div className="py-10 md:w-1/4 sm:w-full border text-center rounded  ">
       <h2 className=":text-2xl  font-semibold mb-4">Your Profile</h2>
@@ -56,7 +57,12 @@ window.location.reload()
           Status: <span>{user.status}</span>
         </h1>
       </div>
-      <button className="bg-red-500 rounded px-3 py-2 font-semibold text-white mt-2" onClick={logout}>Logout</button>
+      <button
+        className="bg-red-500 rounded px-3 py-2 font-semibold text-white mt-2"
+        onClick={logout}
+      >
+        Logout
+      </button>
     </div>
   );
 };

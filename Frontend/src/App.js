@@ -8,15 +8,16 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLayoutEffect } from "react";
 import axios from "axios";
+import { basePath } from "./constant";
 
 const App = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   useLayoutEffect(() => {
     axios
-      .get("/api/user/authenticate")
+      .get(basePath + "/api/user/authenticate", { withCredentials: true })
       .then((res) => {
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         dispatch({
           type: "LOGIN",
           payload: res.data.user,

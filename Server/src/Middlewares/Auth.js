@@ -4,9 +4,9 @@ const User = require("../Models/user.model");
 const auth = (req, res, next) => {
   const cookie = req.cookies;
   if (!cookie.tokens) {
-    res.status(401).send("Authentication failed");
+    return res.status(401).send("Authentication failed");
   }
-  const token = JSON.parse(cookie?.tokens)?.tokens;
+  const token = cookie?.tokens ? JSON.parse(cookie?.tokens)?.tokens : null;
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, async (error, decoded) => {
       if (error) {

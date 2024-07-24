@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { basePath } from "../constant";
 
 const History = () => {
   const [history, setHistory] = useState([]);
@@ -10,17 +11,18 @@ const History = () => {
   const userId = useSelector((store) => store.user._id);
   const getHistory = async () => {
     try {
-      const url = `/api/transactions?userId=${userId}`;
-      const searchUrl = `/api/transactions?userId=${userId}&title=${search}`;
+      const url = basePath + `/api/transactions?userId=${userId}`;
+      const searchUrl =
+        basePath + `/api/transactions?userId=${userId}&title=${search}`;
       if (search) {
-        let resp = await axios.get(searchUrl);
+        let resp = await axios.get(searchUrl, { withCredentials: true });
         setHistory(resp.data.transactions);
       } else {
-        let resp = await axios.get(url);
+        let resp = await axios.get(url, { withCredentials: true });
         setHistory(resp.data.transactions);
       }
     } catch (error) {
-      toast.error("Faild to fetch! Please resolve");
+      toast.error(error?.response?.data || "Faild to fetch! Please resolve");
     }
   };
   function formatDateAndTime(inputDate) {
@@ -37,7 +39,9 @@ const History = () => {
 
   const handleDelete = async (id) => {
     try {
-      let resp = await axios.delete("/api/transactions/" + id);
+      let resp = await axios.delete(basePath + "/api/transactions/" + id, {
+        withCredentials: true,
+      });
       console.log(resp);
 
       toast.success(resp.data.message);
@@ -53,18 +57,21 @@ const History = () => {
   };
   console.log(history);
   useEffect(() => {
-    getHistory();
-  }, []);
-  useEffect(() => {
-    setTimeout(() => {
+    if (search) {
+      let key = setTimeout(() => {
+        getHistory();
+      }, 1000);
+      return () => clearTimeout(key);
+    } else {
       getHistory();
-    }, 1000);
+    }
   }, [search]);
-
   return (
     <div className="h-[514px] overflow-hidden">
       <div className=" flex border  justify-between py-3 px-3">
-        <h3 className="md:text-2xl text-xl  font-semibold font-sans">History</h3>
+        <h3 className="md:text-2xl text-xl  font-semibold font-sans">
+          History
+        </h3>
         <input
           type="text"
           onChange={(e) => {

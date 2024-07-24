@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { basePath } from "../constant";
 
 const AddTransaction = () => {
   const dispatch = useDispatch();
@@ -9,12 +10,16 @@ const AddTransaction = () => {
     const [title, description, amount, type] = e.target;
     console.log(title.value, description.value, amount.value, type.value);
     try {
-      const resp = await axios.post(`/api/transactions`, {
-        title: title.value,
-        description: description.value,
-        amount: amount.value,
-        type: type.value,
-      });
+      const resp = await axios.post(
+        basePath + `/api/transactions`,
+        {
+          title: title.value,
+          description: description.value,
+          amount: amount.value,
+          type: type.value,
+        },
+        { withCredentials: true }
+      );
       localStorage.setItem("user", JSON.stringify(resp.data.user));
       dispatch({
         type: "LOGIN",
@@ -66,6 +71,7 @@ const AddTransaction = () => {
             placeholder="Enter your  amount"
             required
             name="amount"
+            min={1}
             type="number"
           />
           <div className="my-3">
